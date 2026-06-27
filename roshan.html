@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шоколадна Країна — Преміум Шоколад</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap');
+        
+        :root {
+            --brown: #5C3317;
+            --gold: #D4AF37;
+            --cream: #F5EDE1;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom, #f8f1e9, #e8d9c8);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: var(--brown);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        
+        .logo img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 18px;
+                gap: 6px;
+            }
+            .logo img {
+                width: 32px;
+                height: 32px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 15px;
+                gap: 5px;
+            }
+            .logo img {
+                width: 28px;
+                height: 28px;
+            }
+            .header-content {
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+            .search-bar {
+                order: 3;
+                flex: 1 1 100%;
+                margin: 5px 0;
+            }
+        }
+        
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 20px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.95);
+            transition: box-shadow 0.3s;
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--gold);
+        }
+        
+        .search-bar::before {
+            content: '🔍';
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+        
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .nav-icons button, .nav-icons a {
+            color: white;
+            background: none;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .nav-icons button:hover, .nav-icons a:hover { transform: scale(1.1); }
+        
+        .hero {
+            background: linear-gradient(rgba(92,51,23,0.75), rgba(92,51,23,0.75)), url('https://picsum.photos/id/1015/1920/700') center/cover;
+            color: white;
+            text-align: center;
+            padding: 140px 20px 100px;
+            margin-bottom: 20px;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.2rem;
+            margin-bottom: 15px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .description {
+            max-width: 800px;
+            margin: 60px auto;
+            text-align: center;
+            padding: 0 20px;
+            font-size: 1.2rem;
+        }
+        
+        .products {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 50px;
+            color: var(--brown);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(92,51,23,0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Початковий-прихований */
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+        }
+        
+        /* Коли картка -видимa */
+        .product-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(92,51,23,0.25);
+        }
+        
+        .product-image-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image {
+            height: 240px;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.6s ease;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+        }
+        
+        .in-stock {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #4CAF50;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+        }
+        
+        .product-info {
+            padding: 22px;
+        }
+        
+        .product-name {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--brown);
+            font-weight: 500;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--brown);
+            margin-bottom: 15px;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .product-actions input {
+            width: 60px;
+            padding: 10px;
+            border: 2px solid #e0d5c8;
+            border-radius: 10px;
+            font-size: 14px;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        
+        .product-actions input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+        
+        .add-to-cart {
+            flex: 1;
+            background: var(--brown);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .add-to-cart:hover {
+            background: #3d220f;
+            transform: scale(1.02);
+        }
+        
+        .add-to-cart:active {
+            transform: scale(0.95);
+        }
+        
+        footer {
+            background: #2c1a0f;
+            color: #ddd;
+            padding: 70px 20px 40px;
+            text-align: center;
+        }
+        
+        .social-links a {
+            font-size: 32px;
+            margin: 0 15px;
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+        
+        .social-links a:hover { 
+            color: var(--gold);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            margin-top: 30px;
+            opacity: 0.7;
+            font-size: 14px;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4CAF50;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            z-index: 10000;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            animation: slideUp 0.5s ease;
+            font-weight: 500;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy0aSgMRfJdwX3bth-PX-dzYW4ALENxCVYABq1TkgdJWnkroCukPMrJwQ&s=10" alt="Шоколадна Країна">ROOSHEN</a>
+            
+            <div class="search-bar">
+                <input type="text" id="search" placeholder="Пошук шоколаду...">
+            </div>
+            
+            <div class="nav-icons">
+                <button onclick="showHelp()" title="Допомога">❓</button>
+                <a href="#" onclick="toggleCart()" title="Кошик">🛒 <span id="cart-count">0</span></a>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <h1>Солодке життя починається тут</h1>
+        <p>Преміум шоколад за найкращими рецептами</p>
+    </section>
+    
+    <div class="description">
+        <h2>Ласкаво просимо до Шоколадної Країни</h2>
+        <p>Ми створюємо справжні шедеври з найкращих какао-бобів. Якість, смак і емоції — як у Roshen, але з душею!</p>
+    </div>
+    
+    <section class="products">
+        <h2 class="section-title">🍫 Наші шоколадні шедеври</h2>
+        <div class="products-grid" id="products-grid"></div>
+    </section>
+    
+    <footer>
+        <p><strong>Шоколадна Країна © 2026</strong></p>
+        <div class="social-links" style="margin:20px 0">
+            <a href="#">📘 Facebook</a>
+            <a href="#">📷 Instagram</a>
+            <a href="#">🐦 Twitter</a>
+            <a href="#">📺 YouTube</a>
+        </div>
+        <div class="footer-bottom">
+            <p>📞 +380 XX XXX XX XX | ✉️ info@choco.ua</p>
+            <p style="margin-top:8px;">Працюємо для вас щодня з 9:00 до 21:00</p>
+        </div>
+    </footer>
+    
+   
+    <div id="cart-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
+        <div style="background:white; width:90%; max-width:520px; border-radius:20px; padding:30px; max-height:85vh; overflow:auto; animation: fadeInUp 0.4s ease;">
+            <h2 style="color:var(--brown);">🛒 Ваш кошик</h2>
+            <div id="cart-items"></div>
+            <h3 id="cart-total" style="margin:20px 0; text-align:right; color:var(--brown);">Разом: 0 грн</h3>
+            <button onclick="closeCart()" style="width:100%; padding:16px; background:var(--brown); color:white; border:none; border-radius:12px; font-size:18px; cursor:pointer; transition:background 0.3s;">Закрити</button>
+        </div>
+    </div>
+    
+    <script>
+        // ===== ТОВАРИ =====//
+        const products = [
+            {id:1, name:"Молочний з мигдалем", price:89, img:"https://picsum.photos/id/1060/600/400"},
+            {id:2, name:"Гіркий 75% какао", price:99, img:"https://picsum.photos/id/1080/600/400"},
+            {id:3, name:"Білий з полуницею", price:95, img:"https://picsum.photos/id/201/600/400"},
+            {id:4, name:"Карамельна класика", price:115, img:"https://picsum.photos/id/292/600/400"},
+            {id:5, name:"Трюфель з горіхами", price:129, img:"https://picsum.photos/id/165/600/400"},
+            {id:6, name:"Медовий з цитрусами", price:105, img:"https://picsum.photos/id/213/600/400"},
+            {id:7, name:"Чорний з перцем", price:119, img:"https://picsum.photos/id/284/600/400"},
+            {id:8, name:"Молочний з карамеллю", price:99, img:"https://picsum.photos/id/395/600/400"},
+            {id:9, name:"Білий з малиною", price:109, img:"https://picsum.photos/id/405/600/400"},
+            {id:10, name:"Екстра-темний 85%", price:135, img:"https://picsum.photos/id/456/600/400"},
+            {id:11, name:"З кокосовим молоком", price:89, img:"https://picsum.photos/id/591/600/400"},
+            {id:12, name:"Праліне з ліщиною", price:145, img:"https://picsum.photos/id/635/600/400"}
+        ];
+        
+        let cart = [];
+        
+        // ===== РЕНДЕР ТОВАРІВ =====
+        function renderProducts(filtered = products) {
+            const container = document.getElementById('products-grid');
+            container.innerHTML = '';
+            
+            filtered.forEach((p, i) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.dataset.index = i;
+                card.innerHTML = `
+                    <div class="product-image-wrapper">
+                        <div class="product-image" style="background-image:url('${p.img}')"></div>
+                        <div class="in-stock">✓ В наявності</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-price">${p.price} грн</div>
+                        <div class="product-actions">
+                            <input type="number" id="qty-${p.id}" value="1" min="1">
+                            <button class="add-to-cart" onclick="addToCart(${p.id})">Додати</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            
+            // Запускаємо спостереження за появою карток//
+            observeProducts();
+        }
+        
+        // ===== СПОСТЕРЕЖЕННЯ ЗА ПОЯВОЮ КАРТОК ПРИ СКРОЛІ =====//
+        function observeProducts() {
+            const cards = document.querySelectorAll('.product-card');
+            
+            // Використовуємо Intersection Observer==//
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Додаємо клас visible з невеликою затримкою ==//
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 80);
+                        
+                        // Припиняємо спостерігати за цією карткою //
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15, // Картка вважається видимою, 15% її видно//
+                rootMargin: '0px 0px -50px 0px' // Невелике зміщення //
+            });
+            
+            // Починаємо спостерігати за кожною карткою//
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        }
+        
+        // ===== ДОДАТИ В КОШИК =====//
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const qty = parseInt(document.getElementById(`qty-${id}`).value) || 1;
+            
+            const existing = cart.find(item => item.id === id);
+            if (existing) existing.quantity += qty;
+            else cart.push({...product, quantity: qty});
+            
+            updateCartCount();
+            showToast(`${qty} × ${product.name} додано!`);
+        }
+        
+        function updateCartCount() {
+            document.getElementById('cart-count').textContent = cart.reduce((a, c) => a + c.quantity, 0);
+        }
+        
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = '✅ ' + message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2200);
+        }
+        
+        // ===== КОШИК =====///
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            const items = document.getElementById('cart-items');
+            items.innerHTML = '';
+            
+            if (cart.length === 0) {
+                items.innerHTML = '<p style="text-align:center; padding:40px; color:#999;">Кошик порожній 😔</p>';
+                document.getElementById('cart-total').textContent = 'Разом: 0 грн';
+            } else {
+                let total = 0;
+                cart.forEach(item => {
+                    const sum = item.price * item.quantity;
+                    total += sum;
+                    items.innerHTML += `
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0; padding:12px 0; border-bottom:1px solid #eee;">
+                            <div>
+                                <strong>${item.name}</strong>
+                                <div style="font-size:14px; color:#666;">${item.quantity} шт. × ${item.price} грн</div>
+                            </div>
+                            <div style="font-weight:bold; font-size:18px; color:var(--brown);">${sum} грн</div>
+                        </div>
+                    `;
+                });
+                document.getElementById('cart-total').textContent = `Разом: ${total} грн`;
+            }
+            modal.style.display = 'flex';
+        }
+        
+        function closeCart() {
+            document.getElementById('cart-modal').style.display = 'none';
+        }
+        
+        function showHelp() {
+            showToast('🍫 Допомога: info@choco.ua або +380 XX XXX XX XX');
+            setTimeout(() => {
+                alert("🍫 Допомога Шоколадної Країни:\n\n❓ Проблеми з оплатою?\n🚚 Доставка 1-3 дні\n📦 Повернення протягом 14 днів\n⭐ Гарантія якості 100%\n\n📧 info@choco.ua\n📞 +380 XX XXX XX XX");
+            }, 300);
+        }
+        
+        // ===== ПОШУК =====//
+        document.getElementById('search').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase().trim();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+            renderProducts(filtered);
+        });
+        
+        // ===== ЗАКРИТТЯ МОДАЛЬНОГО ВІКНА =====//
+        document.getElementById('cart-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeCart();
+        });
+        
+        // ===== ЗАВАНТАЖЕННЯ =====//
+        window.onload = () => {
+            renderProducts();
+        };
+    </script>
+</body>
+</html>

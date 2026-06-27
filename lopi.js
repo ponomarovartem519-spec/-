@@ -22,8 +22,8 @@ function pay() {
   }
 }
 document.getElementById("regForm").addEventListener("submit", function(event) {
-  event.preventDefault(); // зупиняє перехід на іншу сторінку
+  event.preventDefault();
 
-  document.getElementById("message").innerText = "ДЯКУЮ 🙏";
+  document.getElementById("message").innerText = "ДЯКУЮ ЗА РЕЄСТРАЦІЮ! ВИ УСПІШНО ЗАРЕЄСТРОВАНІ НА НАШОМУ САЙТІ.";
   document.getElementById("regForm").style.display = "none";
 });
