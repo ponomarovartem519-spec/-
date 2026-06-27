@@ -118,22 +118,24 @@
             box-shadow: 0 0 0 3px var(--gold);
         }
         
-        .search-bar::before {
-            content: '🔍';
+        .search-bar .search-icon {
             position: absolute;
-            left: 18px;
+            left: 14px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 18px;
+            width: 20px;
+            height: 20px;
+            color: #888;
+            pointer-events: none;
         }
         
         .nav-icons {
             display: flex;
-            gap: 25px;
+            gap: 20px;
             align-items: center;
         }
         
-        .nav-icons button, .nav-icons a {
+        .nav-icons a {
             color: white;
             background: none;
             border: none;
@@ -143,9 +145,118 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            text-decoration: none;
         }
         
-        .nav-icons button:hover, .nav-icons a:hover { transform: scale(1.1); }
+        .nav-icons a:hover { transform: scale(1.1); }
+        
+        /* ===== СТИЛІ ДЛЯ FAQ-КНОПКИ ===== */
+        .faq-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background-color: #ffe53b;
+            background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.151);
+            position: relative;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .faq-button svg {
+            height: 1.5em;
+            fill: white;
+        }
+        
+        .faq-button:hover svg {
+            animation: jello-vertical 0.7s both;
+        }
+        
+        .faq-button:hover {
+            transform: scale(1.05);
+        }
+        
+        @keyframes jello-vertical {
+            0% {
+                transform: scale3d(1, 1, 1);
+            }
+            30% {
+                transform: scale3d(0.75, 1.25, 1);
+            }
+            40% {
+                transform: scale3d(1.25, 0.75, 1);
+            }
+            50% {
+                transform: scale3d(0.85, 1.15, 1);
+            }
+            65% {
+                transform: scale3d(1.05, 0.95, 1);
+            }
+            75% {
+                transform: scale3d(0.95, 1.05, 1);
+            }
+            100% {
+                transform: scale3d(1, 1, 1);
+            }
+        }
+        
+        .tooltip {
+            position: absolute;
+            top: -20px;
+            opacity: 0;
+            background-color: #ffe53b;
+            background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition-duration: 0.2s;
+            pointer-events: none;
+            letter-spacing: 0.5px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .tooltip::before {
+            position: absolute;
+            content: "";
+            width: 10px;
+            height: 10px;
+            background-color: #ff2525;
+            background-size: 1000%;
+            background-position: center;
+            transform: rotate(45deg);
+            bottom: -15%;
+            transition-duration: 0.3s;
+        }
+        
+        .faq-button:hover .tooltip {
+            top: -40px;
+            opacity: 1;
+            transition-duration: 0.3s;
+        }
+        
+        @media (max-width: 480px) {
+            .faq-button {
+                width: 40px;
+                height: 40px;
+            }
+            .faq-button svg {
+                height: 1.2em;
+            }
+            .tooltip {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+        }
         
         .hero {
             background: linear-gradient(rgba(92,51,23,0.75), rgba(92,51,23,0.75)), url('https://picsum.photos/id/1015/1920/700') center/cover;
@@ -186,6 +297,105 @@
             font-size: 1.2rem;
         }
         
+        .description .btn-wrapper {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* ===== СТИЛІ ДЛЯ КНОПКИ-ПРИВІТАННЯ ===== */
+        .btn2 {
+            position: relative;
+            display: inline-block;
+            padding: 15px 30px;
+            border: 2px solid #fefefe;
+            text-transform: uppercase;
+            color: #fefefe;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 20px;
+            transition: 0.3s;
+            background-color: transparent;
+            cursor: pointer;
+            background-color: #5C3317;
+            border-radius: 8px;
+            min-width: 180px;
+        }
+        
+        .btn2::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: calc(100% + 6px);
+            height: calc(100% + 2px);
+            background-color: #212121;
+            transition: 0.3s ease-out;
+            transform: scaleY(1);
+            border-radius: 8px;
+            z-index: 1;
+        }
+        
+        .btn2::after {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: calc(100% + 4px);
+            height: calc(100% - 50px);
+            background-color: #212121;
+            transition: 0.3s ease-out;
+            transform: scaleY(1);
+            border-radius: 8px;
+            z-index: 1;
+        }
+        
+        .btn2:hover::before {
+            transform: translateY(-25px);
+            height: 0;
+        }
+        
+        .btn2:hover::after {
+            transform: scaleX(0);
+            transition-delay: 0.15s;
+        }
+        
+        .btn2:hover {
+            border: 2px solid #fefefe;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .btn2 .spn2 {
+            position: relative;
+            z-index: 3;
+            text-decoration: none;
+            border: none;
+            background-color: transparent;
+            color: #fefefe;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        
+        /* Анімація для кнопки при завантаженні */
+        .btn2 {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(212, 175, 55, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+            }
+        }
+        
         .products {
             max-width: 1200px;
             margin: 0 auto;
@@ -212,12 +422,10 @@
             box-shadow: 0 10px 30px rgba(92,51,23,0.1);
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             
-            /* Початковий-прихований */
             opacity: 0;
             transform: translateY(60px) scale(0.95);
         }
         
-        /* Коли картка -видимa */
         .product-card.visible {
             opacity: 1;
             transform: translateY(0) scale(1);
@@ -297,26 +505,105 @@
             border-color: var(--gold);
         }
         
-        .add-to-cart {
+        /* ===== СТИЛІ ДЛЯ CHECKBOX-КНОПКИ ===== */
+        .checkbox-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            margin: 0;
             flex: 1;
-            background: var(--brown);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 15px;
+        }
+        
+        .checkbox {
+            display: none;
+        }
+        
+        .checkbox-label {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            width: 100%;
+            justify-content: center;
         }
         
-        .add-to-cart:hover {
-            background: #3d220f;
-            transform: scale(1.02);
+        .checkbox-flip {
+            width: 60px;
+            height: 60px;
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: transform 0.4s ease;
         }
         
-        .add-to-cart:active {
-            transform: scale(0.95);
+        .checkbox-front,
+        .checkbox-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            backface-visibility: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .checkbox-front {
+            background: linear-gradient(135deg, #ff6347, #f76c6c);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transform: rotateY(0deg);
+        }
+        
+        .checkbox-back {
+            background: linear-gradient(135deg, #36b54a, #00c1d4);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transform: rotateY(180deg);
+        }
+        
+        .checkbox-wrapper:hover .checkbox-flip {
+            transform: scale(1.1);
+            transition: transform 0.4s ease-out;
+        }
+        
+        .checkbox:checked + .checkbox-label .checkbox-front {
+            transform: rotateY(180deg);
+        }
+        
+        .checkbox:checked + .checkbox-label .checkbox-back {
+            transform: rotateY(0deg);
+        }
+        
+        .checkbox:focus + .checkbox-label .checkbox-flip {
+            box-shadow: 0 0 15px rgba(54, 181, 73, 0.7), 0 0 20px rgba(0, 193, 212, 0.4);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .icon-path {
+            stroke: white;
+            stroke-width: 2;
+            fill: transparent;
+        }
+        
+        .checkbox-front svg,
+        .checkbox-back svg {
+            width: 32px;
+            height: 32px;
+        }
+        
+        @media (max-width: 480px) {
+            .checkbox-flip {
+                width: 50px;
+                height: 50px;
+            }
+            .checkbox-front svg,
+            .checkbox-back svg {
+                width: 26px;
+                height: 26px;
+            }
         }
         
         footer {
@@ -377,27 +664,45 @@
     <header>
         <div class="header-content">
             <a href="#" class="logo">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy0aSgMRfJdwX3bth-PX-dzYW4ALENxCVYABq1TkgdJWnkroCukPMrJwQ&s=10" alt="Шоколадна Країна">ROOSHEN</a>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy0aSgMRfJdwX3bth-PX-dzYW4ALENxCVYABq1TkgdJWnkroCukPMrJwQ&s=10" alt="Шоколадна Країна">
+                Країна
+            </a>
             
             <div class="search-bar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="search-icon bi bi-bag-plus-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5z"/>
+                </svg>
                 <input type="text" id="search" placeholder="Пошук шоколаду...">
             </div>
             
             <div class="nav-icons">
-                <button onclick="showHelp()" title="Допомога">❓</button>
+                <button class="faq-button" onclick="showHelp()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                        <path d="M80 160c0-35.3 28.7-64 64-64h32c35.3 0 64 28.7 64 64v3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74V320c0 17.7 14.3 32 32 32s32-14.3 32-32v-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7V160c0-70.7-57.3-128-128-128H144C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/>
+                    </svg>
+                    <span class="tooltip">FAQ</span>
+                </button>
+                
                 <a href="#" onclick="toggleCart()" title="Кошик">🛒 <span id="cart-count">0</span></a>
             </div>
         </div>
     </header>
     
     <section class="hero">
-        <h1>Солодке життя починається тут</h1>
-        <p>Преміум шоколад за найкращими рецептами</p>
+        <h1>"Шоколад — це найкраща література для душі".</h1>
+        <p>Антуан де Сент-Екзюпері (французький письменник-філософ).</p>
     </section>
     
     <div class="description">
-        <h2>Ласкаво просимо до Шоколадної Країни</h2>
+        <h2>🍫 Ласкаво просимо до Шоколадної Країни</h2>
         <p>Ми створюємо справжні шедеври з найкращих какао-бобів. Якість, смак і емоції — як у Roshen, але з душею!</p>
+        
+        <!-- ===== КНОПКА-ПРИВІТАННЯ ПО ЦЕНТРУ ===== -->
+        <div class="btn-wrapper">
+            <button class="btn2">
+                <span class="spn2">HELLO !</span>
+            </button>
+        </div>
     </div>
     
     <section class="products">
@@ -419,7 +724,7 @@
         </div>
     </footer>
     
-   
+    <!-- Кошик -->
     <div id="cart-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
         <div style="background:white; width:90%; max-width:520px; border-radius:20px; padding:30px; max-height:85vh; overflow:auto; animation: fadeInUp 0.4s ease;">
             <h2 style="color:var(--brown);">🛒 Ваш кошик</h2>
@@ -430,7 +735,6 @@
     </div>
     
     <script>
-        // ===== ТОВАРИ =====//
         const products = [
             {id:1, name:"Молочний з мигдалем", price:89, img:"https://picsum.photos/id/1060/600/400"},
             {id:2, name:"Гіркий 75% какао", price:99, img:"https://picsum.photos/id/1080/600/400"},
@@ -448,7 +752,6 @@
         
         let cart = [];
         
-        // ===== РЕНДЕР ТОВАРІВ =====
         function renderProducts(filtered = products) {
             const container = document.getElementById('products-grid');
             container.innerHTML = '';
@@ -467,46 +770,66 @@
                         <div class="product-price">${p.price} грн</div>
                         <div class="product-actions">
                             <input type="number" id="qty-${p.id}" value="1" min="1">
-                            <button class="add-to-cart" onclick="addToCart(${p.id})">Додати</button>
+                            <div class="checkbox-container">
+                                <div class="checkbox-wrapper">
+                                    <input class="checkbox" id="checkbox-${p.id}" type="checkbox" />
+                                    <label class="checkbox-label" for="checkbox-${p.id}">
+                                        <div class="checkbox-flip">
+                                            <div class="checkbox-front">
+                                                <svg fill="white" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M19 13H12V19H11V13H5V12H11V6H12V12H19V13Z" class="icon-path"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="checkbox-back">
+                                                <svg fill="white" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9 19l-7-7 1.41-1.41L9 16.17l11.29-11.3L22 6l-13 13z" class="icon-path"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
                 container.appendChild(card);
+                
+                const checkbox = card.querySelector(`#checkbox-${p.id}`);
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        addToCart(p.id);
+                        setTimeout(() => {
+                            this.checked = false;
+                        }, 800);
+                    }
+                });
             });
             
-            // Запускаємо спостереження за появою карток//
             observeProducts();
         }
         
-        // ===== СПОСТЕРЕЖЕННЯ ЗА ПОЯВОЮ КАРТОК ПРИ СКРОЛІ =====//
         function observeProducts() {
             const cards = document.querySelectorAll('.product-card');
             
-            // Використовуємо Intersection Observer==//
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry, index) => {
                     if (entry.isIntersecting) {
-                        // Додаємо клас visible з невеликою затримкою ==//
                         setTimeout(() => {
                             entry.target.classList.add('visible');
                         }, index * 80);
-                        
-                        // Припиняємо спостерігати за цією карткою //
                         observer.unobserve(entry.target);
                     }
                 });
             }, {
-                threshold: 0.15, // Картка вважається видимою, 15% її видно//
-                rootMargin: '0px 0px -50px 0px' // Невелике зміщення //
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
             });
             
-            // Починаємо спостерігати за кожною карткою//
             cards.forEach(card => {
                 observer.observe(card);
             });
         }
         
-        // ===== ДОДАТИ В КОШИК =====//
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             const qty = parseInt(document.getElementById(`qty-${id}`).value) || 1;
@@ -531,7 +854,6 @@
             setTimeout(() => toast.remove(), 2200);
         }
         
-        // ===== КОШИК =====///
         function toggleCart() {
             const modal = document.getElementById('cart-modal');
             const items = document.getElementById('cart-items');
@@ -571,19 +893,16 @@
             }, 300);
         }
         
-        // ===== ПОШУК =====//
         document.getElementById('search').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase().trim();
             const filtered = products.filter(p => p.name.toLowerCase().includes(term));
             renderProducts(filtered);
         });
         
-        // ===== ЗАКРИТТЯ МОДАЛЬНОГО ВІКНА =====//
         document.getElementById('cart-modal').addEventListener('click', (e) => {
             if (e.target === e.currentTarget) closeCart();
         });
         
-        // ===== ЗАВАНТАЖЕННЯ =====//
         window.onload = () => {
             renderProducts();
         };
